@@ -1,0 +1,9 @@
+vllm
+datasets
+torch
+torchaudio
+torchvision
+huggingface-hub
+transformers
+flashinfer-python
+scipy
