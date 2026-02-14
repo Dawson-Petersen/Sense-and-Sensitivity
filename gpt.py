@@ -35,7 +35,11 @@ logger = logging.getLogger(__name__)
 including GPT-3.5,
 GPT-4, - Seems to be priced relatively very high (will check after token budgeting) 
 GPT-4o - 
-GPT-4.1, o3, o1-mini, and o1'
+GPT-4.1,
+and o1
+o3,
+o1-mini, 
+
 Based the docs: 
 To keep parity between pre GPT-5.1 and post GPT-5.1
 ReasoningEffort medium
@@ -49,8 +53,9 @@ model_list = [
 # 4.1 mini is a test model
 model_list = [
     "gpt-5-mini-2025-08-07",
-    "o3-mini-2025-01-31",
     "gpt-4.1-mini-2025-04-14",
+    "o3-mini-2025-01-31",
+    # "gpt-4o-mini-2024-07-18",
 ]
 
 def get_config(model):

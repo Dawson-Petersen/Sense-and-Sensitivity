@@ -1,0 +1,46 @@
+import os
+import json
+import argparse
+import logging
+from datetime import datetime
+
+from pathlib import Path
+
+import pandas as pd
+
+import openai
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+if __name__ == "__main__":
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument("batch_submits", type=Path)
+    arg_parser.add_argument("outputs_dir", type=Path)
+    args = arg_parser.parse_args()
+
+    outputs_dir = args.outputs_dir
+    if not outputs_dir.is_dir():
+        raise ValueError(f"Results directory does not exist: {outputs_dir}")
+
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
+    client = openai.OpenAI(api_key=openai_api_key)
+
+    batches = pd.read_csv(args.batch_submits, sep="\t")
+    for _, row in batches.iterrows():
+        batch_id = row["batch_id"]
+        batch_file = row["batch_file"]
+        batch_response = client.batches.retrieve(batch_id)
+        logger.info(f"Batch {batch_id} for file {batch_file} is {batch_response.status}")
+        if batch_response.output_file_id is None:
+            logger.error("Batch {batch_id} for file {batch_file} is not complete yet, no output file available.")
+
+        logger.info(f"Collecting the responses for batch {batch_id} for file {batch_file} from {batch_response.output_file_id}")
+        outputs_response = client.files.content(batch_response.output_file_id)
+        outputs = outputs_response.text
+
+        # Saving the outputs to a file named after the batch_file in the results directory, they give jsonl
+        output_file_path = Path(outputs_dir / Path(batch_file).name).with_suffix(".jsonl")
+        logger.info(f"Saving the outputs for batch {batch_id} for file {batch_file} to {output_file_path}")
+        with open(output_file_path, "w") as f:
+            f.write(outputs)
