@@ -114,7 +114,7 @@ def infer_and_extract_output(client, model, config, prompt_list):
         return {
             "text": content.text,
         }
-    outputs = [output_from_response(response) for response in responses]
+    outputs = [output_from_response(response) for response in tqdm(responses, desc="Extracting output")]
     return outputs
 
 if __name__ == "__main__":
