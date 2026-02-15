@@ -57,8 +57,8 @@ if __name__ == "__main__":
         outputs = [
             {
                 "text" : get_text_from_response(response),
-                "reasoning_effort" : response["response"]["body"]["reasoning"]["effort"] if "reasoning" in response["response"]["body"] else None,
-                "reasoning_summary" : response["response"]["body"]["reasoning"]["summary"] if "reasoning" in response["response"]["body"] else None,
+                "reasoning_effort" : response["response"]["body"]["reasoning"]["effort"] if "reasoning" in response["response"]["body"] else "No Reasoning",
+                "reasoning_summary" : response["response"]["body"]["reasoning"]["summary"] if "reasoning" in response["response"]["body"] else "No Reasoning",
                 "model" : response["response"]["body"]["model"],
             } for response in responses
         ]
