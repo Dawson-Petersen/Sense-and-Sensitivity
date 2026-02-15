@@ -23,11 +23,12 @@ if __name__ == "__main__":
     openai_api_key = os.environ.get("OPENAI_API_KEY")
     client = openai.OpenAI(api_key=openai_api_key)
 
-    uploads = pd.read_csv(args.uploads_file, sep="\t")
+    uploads = pd.read_csv(args.uploads_file)
     # Submit ('create') batches for each uploaded batch file
+    logger.info(f"Uploads : {uploads.describe()}")
     submits = []
-    for _, row in uploads.iterrows():
-        batch_file, file_id = row["batch_file"], row["file_id"]
+    for batch_upload in uploads.to_dict(orient="records"):
+        batch_file, file_id = batch_upload["uploaded_filename"], batch_upload["file_id"]
         logger.info(f"Submitting batch for {batch_file} with file_id {file_id}")
         batch_submit_response = client.batches.create(
             input_file_id=file_id,
@@ -40,6 +41,7 @@ if __name__ == "__main__":
 
         logger.info(f"Got {batch_submit_response} for batch submit of {batch_file}")
         submits.append({
+            **batch_upload,
             "batch_file": batch_file,
             "file_id": batch_submit_response.input_file_id,
             "batch_id": batch_submit_response.id,
@@ -51,5 +53,5 @@ if __name__ == "__main__":
 
     submit_file =  args.submits_file
     logger.info(f"Submitted {len(submits)} batches, saving submit metadata to {submit_file}")
-    pd.DataFrame(submits).to_csv(submit_file, sep="\t", index=False)
+    pd.DataFrame(submits).to_csv(submit_file, index=False)
 

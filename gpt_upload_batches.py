@@ -17,28 +17,32 @@ if __name__ == "__main__":
     client = openai.OpenAI(api_key=openai_api_key)
 
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("batch_dir", type=Path)
+    arg_parser.add_argument("batches_metadata", type=Path)
     arg_parser.add_argument("out_file", type=Path)
     args = arg_parser.parse_args()
+    batches_metadata = args.batches_metadata
+    batches = pd.read_csv(batches_metadata)
+    batches = batches.to_dict(orient="records")
 
-    logger.info(f"Uploading batches from {args.batch_dir}")
+    logger.info(f"Uploading {len(batches)} batches from {batches_metadata}")
     uploads = []
-    for batch_file in args.batch_dir.glob("*.jsonl"):
-        logger.info(f"Uploading {batch_file}")
+    for batch in batches:
+        batch_file = batch["batch_file"]
+        logger.info(f"Uploading {batch_file} for batch {batch}")
         with open(batch_file, "rb") as f:
             batch_file_response = client.files.create(file=f, purpose="batch")
 
         logger.info(f"Got {batch_file_response} for {batch_file}")
         uploads.append({
-            "batch_file": batch_file,
+            **batch,
             "file_id": batch_file_response.id,
             "object": batch_file_response.object,
             "bytes": batch_file_response.bytes,
             "created_at": batch_file_response.created_at,
             "purpose": batch_file_response.purpose,
-            "response_filename": batch_file_response.filename,
+            "uploaded_filename": batch_file_response.filename,
         })
 
     uploads_file = args.out_file
     logger.info(f"Uploaded {len(uploads)} batches, saving upload metadata to {uploads_file}")
-    pd.DataFrame(uploads).to_csv(uploads_file, sep="\t", index=False)
+    pd.DataFrame(uploads).to_csv(uploads_file, index=False)

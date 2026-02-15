@@ -38,17 +38,39 @@ Since max_new_tokens is the controlling parameter -
 we can set it to some round tokens, leaving budget for answer tokens. 
 """
 # FIXME deduplicate all this with gpt.py
-model_list = [
+
+batch_configs = [
+    {
+        "model_name": "gpt-5-mini-2025-08-07",
+        "reasoning_effort": "minimal",
+    },
+    {
+        "model_name": "gpt-5-mini-2025-08-07",
+        "reasoning_effort" : "low",
+    },
+    {
+        "model_name": "gpt-5-mini-2025-08-07",
+        "reasoning_effort" : "medium",
+    },
+    {
+        "model_name" : "gpt-5.2-2025-12-11",
+        "reasoning_effort" : "none",
+    },
+    {
+        "model_name" : "gpt-5.2-2025-12-11",
+        "reasoning_effort" : "minimal",
+    },
+    {
+        "model_name" : "gpt-5.2-2025-12-11",
+        "reasoning_effort" : "low",
+    },
+    {
+        "model_name" : "gpt-5.2-2025-12-11",
+        "reasoning_effort" : "medium",
+    },
 ]
 
-# 4.1 mini is a test model
-model_list = [
-    "gpt-5-mini-2025-08-07",
-    "o3-mini-2025-01-31",
-    "gpt-4.1-mini-2025-04-14",
-]
-
-def get_config(model):
+def get_config(model_name, reasoning_effort):
     config = {
         "max_output_tokens": 16,
         "top_logprobs": 20,
@@ -57,19 +79,19 @@ def get_config(model):
             "effort": None
         }
     }
-    if "gpt-4.1" in model:
+    if "gpt-4.1" in model_name:
         config["temperature"] = 0
 
     else:
-        config["reasoning"]["effort"] = "medium"
+        config["reasoning"]["effort"] = reasoning_effort
         config["max_output_tokens"] = 128 + 2048 # For o3 "medium" 1024 was not enough
         config["top_logprobs"] = None
 
     return config
 
 
-def prompt_request(prompt, index, model):
-    config = get_config(model)
+def prompt_request(prompt, model, reasoning_effort, index):
+    config = get_config(model, reasoning_effort)
     return {
         "custom_id": f"{model}-{index}",
         "method": "POST",
@@ -86,7 +108,7 @@ def prompt_request(prompt, index, model):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("out", type=Path)
     parser.add_argument("--test", default=False, action="store_true")
 
 
@@ -102,16 +124,29 @@ if __name__ == "__main__":
         prompts_dataset = prompts_dataset[:10]
 
     prompts_list = prompts_dataset['prompt']
-    logger.info(f"Creating batch requests for {len(prompts_list)} prompts and {len(model_list)} models")
-    for model in model_list:
-        config = get_config(model)
+    logger.info(f"Creating batch requests for {len(prompts_list)} prompts and {len(batch_configs)} model configurations")
+    batches = []
+    for batch_config in batch_configs:
+        model = batch_config["model_name"]
+        reasoning_effort = batch_config["reasoning_effort"]
         # We want to make a batch request for all the prompts for the model
         logger.info(f"Creating {len(prompts_list)} batch requests for {model} model")
-        model_batch = [prompt_request(prompt, index, model) for index, prompt in enumerate(prompts_list)]
-        output_path = args.out / f"{model}-batch.jsonl"
+        logger.info(f"The model will use the config: {get_config(model, reasoning_effort)}")
+        model_batch = [prompt_request(prompt, model, reasoning_effort, index) for index, prompt in enumerate(prompts_list)]
+        output_path = args.out / f"{model}-{reasoning_effort}-batch.jsonl"
         logger.info(f"Saving request batch for {model} to {output_path}")
         # Save batch as jsonl
         with open(output_path, "w") as f:
             for request in model_batch:
                 json.dump(request, f)
                 f.write("\n")
+        batches.append(
+            {
+                **batch_config,
+                "batch_file": output_path,
+            }
+        )
+    # Save batch configs to a csv file
+    batch_configs_path = args.out / "batches.csv"
+    logger.info(f"Saving batch configs to {batch_configs_path}")
+    pd.DataFrame(batches).to_csv(batch_configs_path, index=False)
