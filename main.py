@@ -12,8 +12,7 @@ from tqdm import tqdm
 
 from huggingface_hub import auth_check
 import torch
-from huggingface_hub import login
-login("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")
+
 
 from prompts import get_dataset_for_coverage_questions
 from model import MetaLinguisticJudgement
