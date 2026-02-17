@@ -13,13 +13,16 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
-    openai_api_key = os.environ.get("OPENAI_API_KEY")
-    client = openai.OpenAI(api_key=openai_api_key)
+
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("batches_metadata", type=Path)
     arg_parser.add_argument("out_file", type=Path)
     args = arg_parser.parse_args()
+
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
+    client = openai.OpenAI(api_key=openai_api_key)
+
     batches_metadata = args.batches_metadata
     batches = pd.read_csv(batches_metadata)
     batches = batches.to_dict(orient="records")

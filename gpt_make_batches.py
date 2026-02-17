@@ -41,6 +41,10 @@ we can set it to some round tokens, leaving budget for answer tokens.
 
 batch_configs = [
     {
+        "model_name": "gpt-4.1-2025-04-14",
+        "reasoning_effort": None,
+    },
+    {
         "model_name": "gpt-5-mini-2025-08-07",
         "reasoning_effort": "minimal",
     },
@@ -55,10 +59,6 @@ batch_configs = [
     {
         "model_name" : "gpt-5.2-2025-12-11",
         "reasoning_effort" : "none",
-    },
-    {
-        "model_name" : "gpt-5.2-2025-12-11",
-        "reasoning_effort" : "minimal",
     },
     {
         "model_name" : "gpt-5.2-2025-12-11",
