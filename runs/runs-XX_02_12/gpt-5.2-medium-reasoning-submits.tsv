@@ -1,2 +1,0 @@
-batch_file	file_id	batch_id	completion_window	created_at	metadata
-data/openai/requests/gpt-5.2-2025-12-11-batch.jsonl	file-Mw7Y7vAuHDGGq3669AcQq4	batch_69915c7908308190af9c83d35be1d691	24h	1771134073	{'description': 'Batch submit for data/openai/requests/gpt-5.2-2025-12-11-batch.jsonl at 2026-02-15T00:41:10.288283'}

@@ -13,5 +13,3 @@ Added double quotes around definition where it was missing
   * Definition - Connectives
   * Exclusion
   * "Connective/coverage" verb e.g. Personal Accident II
-  * 
-* 

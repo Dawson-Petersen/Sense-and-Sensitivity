@@ -1,8 +1,0 @@
-model_name,reasoning_effort,batch_file,file_id,object,bytes,created_at,purpose,response_filename
-gpt-5-mini-2025-08-07,minimal,runs/runs-XX_02_15/gpt-5-mini-2025-08-07-minimal-batch.jsonl,file-6CR2sAeXgWmEbkWh7Y2ASz,file,499614,1771186405,batch,gpt-5-mini-2025-08-07-minimal-batch.jsonl
-gpt-5-mini-2025-08-07,low,runs/runs-XX_02_15/gpt-5-mini-2025-08-07-low-batch.jsonl,file-N8Zuf8GZz8oQhypN8tRvKu,file,497406,1771186406,batch,gpt-5-mini-2025-08-07-low-batch.jsonl
-gpt-5-mini-2025-08-07,medium,runs/runs-XX_02_15/gpt-5-mini-2025-08-07-medium-batch.jsonl,file-Se79VU75vnGqZzo4ZEs5iX,file,499062,1771186407,batch,gpt-5-mini-2025-08-07-medium-batch.jsonl
-gpt-5.2-2025-12-11,none,runs/runs-XX_02_15/gpt-5.2-2025-12-11-none-batch.jsonl,file-ESbzHZLmUaLxMEzJoUVgCN,file,494646,1771186407,batch,gpt-5.2-2025-12-11-none-batch.jsonl
-gpt-5.2-2025-12-11,minimal,runs/runs-XX_02_15/gpt-5.2-2025-12-11-minimal-batch.jsonl,file-7xVDwNM9j8BMYUbFaBWUeR,file,496302,1771186408,batch,gpt-5.2-2025-12-11-minimal-batch.jsonl
-gpt-5.2-2025-12-11,low,runs/runs-XX_02_15/gpt-5.2-2025-12-11-low-batch.jsonl,file-3fzvXyv4ahMEn1v6K1bFeN,file,494094,1771186409,batch,gpt-5.2-2025-12-11-low-batch.jsonl
-gpt-5.2-2025-12-11,medium,runs/runs-XX_02_15/gpt-5.2-2025-12-11-medium-batch.jsonl,file-JqxQdFBoeKZB7cEfupegMx,file,495750,1771186410,batch,gpt-5.2-2025-12-11-medium-batch.jsonl

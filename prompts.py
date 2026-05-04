@@ -120,4 +120,4 @@ def get_dataset_for_coverage_questions():
 if __name__ == "__main__":
     dataset = get_dataset_for_coverage_questions()
     print(dataset)
-    dataset.to_csv("data/prompts/coverage_contracts.csv")
+    dataset.to_csv("data/prompts/coverage_contracts2.csv")
