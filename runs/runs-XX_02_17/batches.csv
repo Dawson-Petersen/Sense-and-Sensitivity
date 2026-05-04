@@ -1,0 +1,8 @@
+model_name,reasoning_effort,batch_file
+gpt-4.1-2025-04-14,,runs/runs-XX_02_17/gpt-4.1-2025-04-14-None-batch.jsonl
+gpt-5-mini-2025-08-07,minimal,runs/runs-XX_02_17/gpt-5-mini-2025-08-07-minimal-batch.jsonl
+gpt-5-mini-2025-08-07,low,runs/runs-XX_02_17/gpt-5-mini-2025-08-07-low-batch.jsonl
+gpt-5-mini-2025-08-07,medium,runs/runs-XX_02_17/gpt-5-mini-2025-08-07-medium-batch.jsonl
+gpt-5.2-2025-12-11,none,runs/runs-XX_02_17/gpt-5.2-2025-12-11-none-batch.jsonl
+gpt-5.2-2025-12-11,low,runs/runs-XX_02_17/gpt-5.2-2025-12-11-low-batch.jsonl
+gpt-5.2-2025-12-11,medium,runs/runs-XX_02_17/gpt-5.2-2025-12-11-medium-batch.jsonl

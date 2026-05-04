@@ -1,0 +1,6 @@
+datasets
+huggingface-hub
+scipy
+tqdm
+numpy
+openai==2.20.0

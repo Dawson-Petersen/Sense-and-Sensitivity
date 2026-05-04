@@ -27,7 +27,7 @@ Our code represents inference and analysis pipeline for the experiments
 * `prompts.py` contains code from generating the prompts for each of the question variants from the source data.
 * `analysis-robustness.ipynb` contains the analysis codee for robustness (Section 4.2)
 * `correlation-analysis.Rmd` contains the R code for the human correlation analysis (Section 4.3)
-
+* `gpt.py` contains our code for collecting judgments from OpenAI models through SDK.
 
 `runs/runs-42_07_16` contains the model outputs for each of the models with labels for the variants.
 
