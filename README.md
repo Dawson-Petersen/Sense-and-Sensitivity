@@ -13,4 +13,6 @@ Python package requirements are maintained separately for the local model infere
 -  `job.sh` and `main.py` are the entrypoints for running the local model inferences using [vllm](https://docs.vllm.ai/en/stable/)
 
 
+Note: We haven't been able to fully test this stripped down version of the code. 
+
 For any queries about the code reach out to the authors.
