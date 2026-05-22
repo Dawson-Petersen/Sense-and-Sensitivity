@@ -6,7 +6,7 @@ import token
 from collections import namedtuple
 import re
 import random
-import   numpy as np
+import numpy as np
 
 from tqdm import tqdm
 
@@ -35,31 +35,11 @@ def set_random_seed(seed):
 
 
 model_list = [
-    # Main set of models with instruct divide and size variety
-  #  "meta-llama/Llama-3.2-1B",
-    "meta-llama/Llama-3.2-1B-Instruct"
-  #  "meta-llama/Llama-3.2-3B",
-  #  "meta-llama/Llama-3.2-3B-Instruct",
-  #  "meta-llama/Llama-3.1-8B",
-  #  "meta-llama/Llama-3.1-8B-Instruct",
-    # pre-downloaded large model
-  #  "meta-llama/Llama-3.1-70B",
-  #  "meta-llama/Llama-3.3-70B-Instruct",
-
-    # Other open models
-  #  "allenai/OLMo-2-1124-7B",
-  #  "allenai/OLMo-2-1124-7B-Instruct",
-  #  "mistralai/Ministral-8B-Instruct-2410",
-  #  "google/gemma-7b",
-  #  "google/gemma-7b-it",
-
-    # Small reference model - would allow for pretraining variation
-  #  "gpt2-medium"
+  "meta-llama/Llama-3.3-70B-Instruct",
 ]
 
 """
 # Interactive snippet for inference
-prompt = get_dataset_for_coverage_questions()[0]['prompt']
 model = MetaLinguisticJudgement("meta-llama/Llama-3.1-8B", 42)
 output = model.infer([prompt])
 yes_logprobs, no_logprobs, a_logprobs, b_logprobs = model.probs([prompt])
