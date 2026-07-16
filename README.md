@@ -10,6 +10,8 @@ Python package requirements are maintained separately for the local model infere
 - `data` contains prompt source and generation data
 - `prompts.py` contains code for generating the prompts from the vague contracts items.
 - `gpt_*.py` scripts are a sequence of steps for running the experiments using OpenAI batches.
+  - Note that the current implmentation does not explicitly match the id across the batch and output.
+  - For our runs used `check_custom_id_mismatch.py` to check for any mismatches in the id across the batch and output.
 -  `job.sh` and `main.py` are the entrypoints for running the local model inferences using [vllm](https://docs.vllm.ai/en/stable/)
 
 
